@@ -1,0 +1,116 @@
+{% extends 'students/base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-7">
+
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-primary text-white d-flex align-items-center gap-2">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>
+        <span class="fw-semibold">{{ title }}</span>
+      </div>
+
+      <div class="card-body p-4">
+        <form method="POST" novalidate>
+          {% csrf_token %}
+
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label fw-medium">First name</label>
+              <input type="text" name="first_name"
+                     value="{{ form.first_name.value|default:'' }}"
+                     class="form-control {% if form.first_name.errors %}is-invalid{% endif %}"
+                     placeholder="e.g. Alice">
+              {% for error in form.first_name.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-medium">Last name</label>
+              <input type="text" name="last_name"
+                     value="{{ form.last_name.value|default:'' }}"
+                     class="form-control {% if form.last_name.errors %}is-invalid{% endif %}"
+                     placeholder="e.g. Smith">
+              {% for error in form.last_name.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-medium">Email</label>
+              <input type="email" name="email"
+                     value="{{ form.email.value|default:'' }}"
+                     class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+                     placeholder="alice@example.com">
+              {% for error in form.email.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-medium">Phone</label>
+              <input type="text" name="phone"
+                     value="{{ form.phone.value|default:'' }}"
+                     class="form-control {% if form.phone.errors %}is-invalid{% endif %}"
+                     placeholder="+977-XXXXXXXXXX">
+              {% for error in form.phone.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-medium">Course</label>
+              <input type="text" name="course"
+                     value="{{ form.course.value|default:'' }}"
+                     class="form-control {% if form.course.errors %}is-invalid{% endif %}"
+                     placeholder="e.g. Computer Science">
+              {% for error in form.course.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-medium">Roll number</label>
+              <input type="text" name="roll_number"
+                     value="{{ form.roll_number.value|default:'' }}"
+                     class="form-control {% if form.roll_number.errors %}is-invalid{% endif %}"
+                     placeholder="e.g. CS001">
+              {% for error in form.roll_number.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-medium">Date of birth</label>
+              <input type="date" name="date_of_birth"
+                     value="{{ form.date_of_birth.value|default:'' }}"
+                     class="form-control {% if form.date_of_birth.errors %}is-invalid{% endif %}">
+              {% for error in form.date_of_birth.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+          </div><!-- /row -->
+
+          <hr class="my-4">
+
+          <div class="d-flex gap-2 justify-content-end">
+            <a href="{% url 'student-list' %}" class="btn btn-outline-secondary">
+              Cancel
+            </a>
+            <button type="submit" class="btn btn-primary px-4">
+              Save student
+            </button>
+          </div>
+
+        </form>
+      </div><!-- /card-body -->
+    </div><!-- /card -->
+
+  </div>
+</div>
+
+{% endblock %}

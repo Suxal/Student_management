@@ -1,0 +1,66 @@
+{% extends 'students/base.html' %}
+{% block content %}
+
+<!-- Search bar -->
+<form method="GET" class="d-flex gap-2 mb-4">
+  <input type="text" name="q" value="{{ query }}"
+         class="form-control" placeholder="Search by name, roll no., or course...">
+  <button class="btn btn-primary">Search</button>
+  {% if query %}
+    <a href="{% url 'student-list' %}" class="btn btn-outline-secondary">Clear</a>
+  {% endif %}
+</form>
+
+<!-- Table -->
+<table class="table table-hover table-bordered">
+  <thead class="table-primary">
+    <tr>
+      <th>Name</th><th>Email</th><th>Course</th><th>Roll no.</th><th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in students %}
+    <tr>
+      <td>{{ s.first_name }} {{ s.last_name }}</td>
+      <td>{{ s.email }}</td>
+      <td>{{ s.course }}</td>
+      <td>{{ s.roll_number }}</td>
+      <td>
+        <a href="{% url 'student-update' s.pk %}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="{% url 'student-delete' s.pk %}" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5" class="text-center text-muted">No students found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Pagination -->
+{% if students.has_other_pages %}
+<nav>
+  <ul class="pagination justify-content-center">
+
+    {% if students.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ students.previous_page_number }}&q={{ query }}">Previous</a>
+    </li>
+    {% endif %}
+
+    {% for num in students.paginator.page_range %}
+    <li class="page-item {% if students.number == num %}active{% endif %}">
+      <a class="page-link" href="?page={{ num }}&q={{ query }}">{{ num }}</a>
+    </li>
+    {% endfor %}
+
+    {% if students.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ students.next_page_number }}&q={{ query }}">Next</a>
+    </li>
+    {% endif %}
+
+  </ul>
+</nav>
+{% endif %}
+
+{% endblock %}
